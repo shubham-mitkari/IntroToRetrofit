@@ -4,8 +4,9 @@ public class GitHubRepo {
     public int id;
     public String name;
 
-    public GitHubRepo(){
-
+    public GitHubRepo(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public int getId() {

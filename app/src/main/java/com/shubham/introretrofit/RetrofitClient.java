@@ -4,25 +4,17 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitClient {
-    String API_BASE_URL = "https://api.github.com/";
+class RetrofitClient {
+    static String API_BASE_URL = "https://api.github.com/";
 
-    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+    static Retrofit.Builder builder = new retrofit2.Retrofit.Builder()
+            .baseUrl(API_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create());
+    static Retrofit retrofit = builder.build();
 
-    Retrofit.Builder builder =
-            new Retrofit.Builder()
-                    .baseUrl(API_BASE_URL)
-                    .addConverterFactory(
-                            GsonConverterFactory.create()
-                    );
-
-    Retrofit retrofit =
-            builder
-                    .client(
-                            httpClient.build()
-                    )
-                    .build();
-
-    GitHubService client =  retrofit.create(GitHubService.class);
-
+    static <S> S createService(Class<S> serviceClass) {
+        return retrofit.create(serviceClass);
+    }
 }
+
+
